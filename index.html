@@ -8,26 +8,49 @@
 </head>
 <body>
     <div id="calcBody">
-        <div id="screen"></div>
+        <div id="screen">
+            <div class="lastNumber">0.00</div>
+            <div class="currentNumber">0.00</div>
+        </div>
         <div class="btnContainer">
-            <button class="btn">Clear</button>
-            <button class="btn">BkSpace</button>
-            <button class="btn">=</button>
-            <button class="btn">1</button>
-            <button class="btn">2</button>
-            <button class="btn">3</button>
-            <button class="btn">4</button>
-            <button class="btn">5</button>
-            <button class="btn">6</button>
-            <button class="btn">7</button>
-            <button class="btn">8</button>
-            <button class="btn">9</button>
-            <button class="btn">0</button>
-            <button class="btn">/</button>
-            <button class="btn">*</button>
-            <button class="btn">-</button>
-            <button class="btn">+</button>
-            <button class="btn">.</button>
+            <div class="btnLeft">
+                <div class="btnNumberContainer">
+
+                    <div class="btnRowOne">
+                        <button class="btn" id="btnSeven">7</button>
+                        <button class="btn" id="btnEight">8</button>
+                        <button class="btn" id="btnNine">9</button>
+                    </div>
+                    <div class="btnRowTwo">   
+                        <button class="btn" id="btnFour">4</button>
+                        <button class="btn" id="btnFive">5</button>
+                        <button class="btn" id="btnSix">6</button>
+                    </div>
+                    <div class="btnRowThree">
+                        <button class="btn" id="btnOne">1</button>
+                        <button class="btn" id="btnTwo">2</button>
+                        <button class="btn" id="btnThree">3</button>
+                    </div>
+                    <div class="btnRowFour">
+                        <button class="btn" id="btnZero">0</button>
+                    </div>
+                </div>
+                
+                <div class="btnExecuteContainer">
+                    <button class="btn" id="btnClear">Clear</button>
+                    <button class="btn" id="btnBkspace">BkSpace</button>
+                    <button class="btn" id="btnDecimal">.</button>
+                </div>
+            </div>
+            
+            <div class="btnActionContainer">
+                <button class="btn" id="btnDivide">/</button>
+                <button class="btn" id="btnMultiply">*</button>
+                <button class="btn" id="btnMinus">-</button>
+                <button class="btn" id="btnPlus">+</button>
+                <button class="btn" id="btnEquals">=</button>
+            </div>
+                
         </div>
     </div>
         
