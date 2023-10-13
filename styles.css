@@ -1,0 +1,36 @@
+* { border: 1px solid black; }
+
+.btn {
+    gap: 10px;
+    width: 100px;
+    height: 100px;
+}
+
+#calcBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 700px;
+    width: 500px;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnContainer{
+    display: block;
+    align-self: center;
+    justify-content: space-between;
+    height: 500px;
+    width: 450px;
+}
+
+#screen {
+    display: flex;
+    align-self: center;
+    height: 125px;
+    width: 450px;
+}
