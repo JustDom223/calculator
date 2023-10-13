@@ -31,7 +31,7 @@ body {
     align-items: center;
 }
 
-.btnContainer{
+#btnContainer{
     display: flex;
     align-self: center;
     justify-content: space-around;
