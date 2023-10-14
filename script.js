@@ -2,8 +2,11 @@ const btnContainerElement = document.getElementById('btnContainer')
 const currentNumberElement = document.querySelector('.currentNumber')
 const lastNumberElement = document.querySelector('.lastNumber')
 
+let firstNumber = 0
+let nextNumber = 10
+let arithmeticSymbol = ''
 
-
+// Using the buttons to manipluate the screen
 btnContainerElement.addEventListener('click', function (event){
     if(event.target.tagName === 'BUTTON'){
         const buttonValue = event.target.value;
@@ -12,16 +15,65 @@ btnContainerElement.addEventListener('click', function (event){
                 currentNumberElement.textContent = ''
             }
             currentNumberElement.textContent += event.target.value
-            
         } else if (/[/*+\-]/.test(buttonValue)) {
             lastNumberElement.textContent = `${currentNumberElement.textContent} ${event.target.value}`
-        } else if (buttonValue === 'Clr'){
+            firstNumber = currentNumberElement.textContent
+            arithmeticSymbol = event.target.value
+            console.log(arithmeticSymbol)
+            console.log(firstNumber)
+        }else if (buttonValue === 'clr'){
             lastNumberElement.textContent = '0.00'
             currentNumberElement.textContent = '0.00'
-
+        }else if (buttonValue === 'bkSpace'){
+            currentNumberElement.textContent = currentNumberElement.textContent.slice(0, -1)
+        } else if (/[=]/.test(buttonValue)) {
+            nextNumber = currentNumberElement.textContent
+            console.log(firstNumber, arithmeticSymbol, nextNumber)
         }
     }
 })
+
+const add = function(a, b) {
+	return a + b
+};
+
+const subtract = function(a, b) {
+	return a - b
+};
+
+const sum = function(a) {
+  let sum = 0
+  for (let i = 0; i < a.length; i++){
+    sum += a[i]
+  }
+  return sum
+  
+};
+
+const multiply = function(a) {
+  let total = 1
+  for (let i = 0; i < a.length; i++){
+    total *= a[i]
+  }
+  return total
+};
+
+const power = function(a, b) {
+  let sum = a
+  for (let i = 0; i < b - 1; i++){
+    sum *= a
+  }
+  return sum
+};
+
+const factorial = function(a) {
+	let sum = 1
+  for (let i = 0; i < a; i++){
+    sum += sum * i
+  }
+  return sum
+};
+
 
 
 // numbers need to edit the main number and add to it..
