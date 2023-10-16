@@ -48,26 +48,19 @@ function handleNumberButtonClick(buttonValue) {
 
 // Handle arithmetic symbol button clicks
 function handleArithmeticSymbol(buttonValue) {
-    lastNumberElement.textContent = `${currentNumberElement.textContent} ${buttonValue}`;
-    firstNumber = currentNumberElement.textContent;
-    currentNumberElement.textContent = '0.00';
-    arithmeticSymbol = buttonValue;
-}
-
-// Handle backspace button click
-function handleBackspace() {
-    currentNumberElement.textContent = currentNumberElement.textContent.slice(0, -1);
-}
-
-// Clear the screen
-function clearScreen() {
-    lastNumberElement.textContent = '0.00';
-    currentNumberElement.textContent = '0.00';
+    if (lastNumberElement.textContent === '0.00'){
+        lastNumberElement.textContent = `${currentNumberElement.textContent} ${buttonValue}`;
+        firstNumber = currentNumberElement.textContent;
+        currentNumberElement.textContent = '0.00';
+        arithmeticSymbol = buttonValue;
+    }else{
+        handleEqualsButtonClick()
+    }
 }
 
 // Handle equals button click
 function handleEqualsButtonClick() {
-    lastNumberElement.textContent = `${lastNumberElement.textContent} ${currentNumberElement.textContent} =`;
+    lastNumberElement.textContent = `${lastNumberElement.textContent} ${currentNumberElement.textContent}`;
     nextNumber = currentNumberElement.textContent;
     
     // Use the selected arithmetic symbol to perform the calculation
@@ -85,6 +78,17 @@ function handleEqualsButtonClick() {
             currentNumberElement.textContent = divide(firstNumber, nextNumber);
             break;
     }
+}
+
+// Handle backspace button click
+function handleBackspace() {
+    currentNumberElement.textContent = currentNumberElement.textContent.slice(0, -1);
+}
+
+// Clear the screen
+function clearScreen() {
+    lastNumberElement.textContent = '0.00';
+    currentNumberElement.textContent = '0.00';
 }
 
 // Arithmetic operation functions
