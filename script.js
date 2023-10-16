@@ -29,12 +29,17 @@ btnContainerElement.addEventListener('click', function (event){
         }else if (buttonValue === 'bkSpace'){
             currentNumberElement.textContent = currentNumberElement.textContent.slice(0, -1)
         } else if (/[=]/.test(buttonValue)) {
+            lastNumberElement.textContent = `${lastNumberElement.textContent} ${currentNumberElement.textContent} ${event.target.value}`
             nextNumber = currentNumberElement.textContent
             console.log(firstNumber, arithmeticSymbol, nextNumber)
             if (arithmeticSymbol === '+'){
                 currentNumberElement.textContent = add(firstNumber, nextNumber)
             }else if(arithmeticSymbol === '-'){
                 currentNumberElement.textContent = subtract(firstNumber, nextNumber)
+            }else if(arithmeticSymbol === '*'){
+                currentNumberElement.textContent = multiply(firstNumber, nextNumber)
+            }else if(arithmeticSymbol === '/'){
+                currentNumberElement.textContent = divide(firstNumber, nextNumber)
             }
         }
     }
@@ -49,6 +54,14 @@ function subtract(num1, num2){
     return Number(num1) - Number(num2)
 }
 
+
+function multiply(num1, num2){
+    return Number(num1) * Number(num2)
+}
+
+function divide(num1, num2){
+    return Number(num1) / Number(num2)
+}
 // const subtract = function(a, b) {
 // 	return a - b
 // };
