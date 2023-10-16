@@ -3,7 +3,7 @@ const currentNumberElement = document.querySelector('.currentNumber')
 const lastNumberElement = document.querySelector('.lastNumber')
 
 let firstNumber = 0
-let nextNumber = 10
+let nextNumber = 0
 let arithmeticSymbol = ''
 
 // Using the buttons to manipluate the screen
@@ -18,7 +18,9 @@ btnContainerElement.addEventListener('click', function (event){
         } else if (/[/*+\-]/.test(buttonValue)) {
             lastNumberElement.textContent = `${currentNumberElement.textContent} ${event.target.value}`
             firstNumber = currentNumberElement.textContent
+            currentNumberElement.textContent = '0.00'
             arithmeticSymbol = event.target.value
+            
             console.log(arithmeticSymbol)
             console.log(firstNumber)
         }else if (buttonValue === 'clr'){
@@ -29,55 +31,64 @@ btnContainerElement.addEventListener('click', function (event){
         } else if (/[=]/.test(buttonValue)) {
             nextNumber = currentNumberElement.textContent
             console.log(firstNumber, arithmeticSymbol, nextNumber)
+            if (arithmeticSymbol === '+'){
+                currentNumberElement.textContent = add(firstNumber, nextNumber)
+            }else if(arithmeticSymbol === '-'){
+                currentNumberElement.textContent = subtract(firstNumber, nextNumber)
+            }
         }
     }
 })
 
-const add = function(a, b) {
-	return a + b
-};
 
-const subtract = function(a, b) {
-	return a - b
-};
+function add(num1, num2){
+    return Number(num1) + Number(num2)
+}
 
-const sum = function(a) {
-  let sum = 0
-  for (let i = 0; i < a.length; i++){
-    sum += a[i]
-  }
-  return sum
+function subtract(num1, num2){
+    return Number(num1) - Number(num2)
+}
+
+// const subtract = function(a, b) {
+// 	return a - b
+// };
+
+// const sum = function(a) {
+//   let sum = 0
+//   for (let i = 0; i < a.length; i++){
+//     sum += a[i]
+//   }
+//   return sum
   
-};
+// };
 
-const multiply = function(a) {
-  let total = 1
-  for (let i = 0; i < a.length; i++){
-    total *= a[i]
-  }
-  return total
-};
+// const multiply = function(a) {
+//   let total = 1
+//   for (let i = 0; i < a.length; i++){
+//     total *= a[i]
+//   }
+//   return total
+// };
 
-const power = function(a, b) {
-  let sum = a
-  for (let i = 0; i < b - 1; i++){
-    sum *= a
-  }
-  return sum
-};
+// const power = function(a, b) {
+//   let sum = a
+//   for (let i = 0; i < b - 1; i++){
+//     sum *= a
+//   }
+//   return sum
+// };
 
-const factorial = function(a) {
-	let sum = 1
-  for (let i = 0; i < a; i++){
-    sum += sum * i
-  }
-  return sum
-};
+// const factorial = function(a) {
+// 	let sum = 1
+//   for (let i = 0; i < a; i++){
+//     sum += sum * i
+//   }
+//   return sum
+// };
 
 
-
-// numbers need to edit the main number and add to it..
-// 
+// // numbers need to edit the main number and add to it..
+// // 
 
 
 
