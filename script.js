@@ -30,13 +30,6 @@ btnContainerElement.addEventListener('click', function (event){
         }}}}
 )
 
-function handleArithmeticSymbol(buttonValue){
-    lastNumberElement.textContent = `${currentNumberElement.textContent} ${buttonValue}`
-    firstNumber = currentNumberElement.textContent
-    currentNumberElement.textContent = '0.00'
-    arithmeticSymbol = buttonValue
-}
-
 function handleNumberButtonClick(buttonValue){
     if(/[0-9.]/.test(buttonValue)) {
         if(currentNumberElement.textContent === '0.00'){
@@ -44,6 +37,14 @@ function handleNumberButtonClick(buttonValue){
         }
         currentNumberElement.textContent += buttonValue
 }}
+
+function handleArithmeticSymbol(buttonValue){
+    lastNumberElement.textContent = `${currentNumberElement.textContent} ${buttonValue}`
+    firstNumber = currentNumberElement.textContent
+    currentNumberElement.textContent = '0.00'
+    arithmeticSymbol = buttonValue
+}
+
 
 function handleBackspace(){
     currentNumberElement.textContent = currentNumberElement.textContent.slice(0, -1)
