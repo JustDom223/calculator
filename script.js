@@ -1,139 +1,160 @@
-// Get references to HTML elements
-const btnContainerElement = document.getElementById('btnContainer');
-const currentNumberElement = document.querySelector('.currentNumber');
-const lastNumberElement = document.querySelector('.lastNumber');
+// Get references to the buttons and elements that need to be manipulated
+const btnContainerElement = document.getElementById('btnContainer')
+const bottomNumberElement = document.querySelector('.currentNumber')
+const topNumberElement = document.querySelector('.lastNumber')
 
 // Initialize variables to store calculator data
+
+let currentResult = 0;
 let firstNumber = 0;
 let secondNumber = 0;
 let arithmeticSymbol = '';
-let decimalUsed = false;
+
 
 // Event listener for button clicks
 btnContainerElement.addEventListener('click', function (event) {
     if (event.target.tagName === 'BUTTON') {
         const buttonValue = event.target.value;
-
         // Use a switch statement to handle different button values
         switch (buttonValue) {
-            case 'clr':
+            case 'clr':   
                 clearScreen();
                 break;
             case 'bkSpace':
                 handleBackspace();
                 break;
             case '=':
-                handleEqualsButtonClick();
+                console.log('equals')
+    
+            // handleEqualsButtonClick();
                 break;
+            case '.':
+                checkDecimalUsed()
             default:
                 // Check if the buttonValue is a number or decimal
-                if(/[0-9.]/.test(buttonValue)) {
+                if(/[0-9]/.test(buttonValue)) {
                     handleNumberButtonClick(buttonValue);
                 } else if (/[/*+\-]/.test(buttonValue)){
-                    handleArithmeticSymbol(buttonValue);
+                    handleArithmeticButtonClick(buttonValue);
                 }
         }
     }
 });
 
+// Check to see if there is already a decimal in the number and add one if there is'nt
+function checkDecimalUsed(){
+    if(bottomNumberElement.textContent.includes('.')){
+        console.log('sorry you have already used a decimal place')
+    }else{
+        bottomNumberElement.textContent += '.';
+    }
+}
+
 // Handle number button clicks
 function handleNumberButtonClick(buttonValue) {
-    if(/[0-9.]/.test(buttonValue)) {
-        if(currentNumberElement.textContent === '0.00'){
-            currentNumberElement.textContent = '';
-        }
-        if(buttonValue === '.' && decimalUsed === false){
-            decimalUsed = true;
-            currentNumberElement.textContent += buttonValue;
-        }else if(buttonValue === '.' && decimalUsed === true){
-            
+    // A check to see if the current diplay is still '0'
+    // If it is then it will check that the button that has
+    // been pressed is a decimal
+        if(bottomNumberElement.textContent === '0'){
+            if (buttonValue !== '.'){
+                bottomNumberElement.textContent = '';
+                bottomNumberElement.textContent += buttonValue;
+            }else{
+                checkDecimalUsed()
+            }
         }else{
-            currentNumberElement.textContent += buttonValue;
-        }
-    }
-}
+            bottomNumberElement.textContent += buttonValue;
+        };
+        firstNumber = bottomNumberElement.textContent
+        console.log(firstNumber)
+};
 
 // Handle arithmetic symbol button clicks
-function handleArithmeticSymbol(buttonValue) {
-    if(lastNumberElement.textContent === ''){
-        arithmeticSymbol = buttonValue
-        firstNumber = currentNumberElement.textContent
-        lastNumberElement.textContent += `${currentNumberElement.textContent} ${buttonValue}`;
-        currentNumberElement.textContent = '0.00';
+function handleArithmeticButtonClick(buttonValue) {
+    const arithmeticSymbol = buttonValue
+    
+    if (secondNumber === 0){
+        secondNumber = firstNumber
+        console.log('you made it')
+        firstNumber = 0
+        topNumberElement.textContent = secondNumber
+        bottomNumberElement.textContent = firstNumber
     } else {
-        arithmeticSymbol = buttonValue
-        secondNumber = 
-        lastNumberElement.textContent = handleEqualsButtonClick()
-        
+        currentResult = handleTheMaths(arithmeticSymbol, firstNumber, secondNumber)
+        console.log(currentResult)
+        topNumberElement.textContent = `${currentResult} ${arithmeticSymbol}`
     }
-        
-        
-        // if (lastNumberElement.textContent === '0.00'){
-        // lastNumberElement.textContent += `${currentNumberElement.textContent} ${buttonValue}`;
-        // currentNumberElement.textContent = '0.00';
-    //     firstNumber = currentNumberElement.textContent;
-    //     arithmeticSymbol = buttonValue;
-    // }else{
-    //     handleEqualsButtonClick();
-    // }
 }
+//     arithmeticSymbol = buttonValue
 
+//     if(topNumberElement.textContent === ''){
+//         firstNumber = bottomNumberElement.textContent
+//         topNumberElement.textContent += `${bottomNumberElement.textContent} ${buttonValue}`;
+//         bottomNumberElement.textContent = '0';
+//     }else{
+//         secondNumber = bottomNumberElement.textContent
+//         currentResult = handleTheMaths(buttonValue, firstNumber, secondNumber)
+//         console.log(answer)
+//         topNumberElement.textContent = `${answer} ${buttonValue}`
+//         firstNumber = answer
+//         bottomNumberElement.textContent = '0';
+        
+//     }
+// }
 
 
 // Handle equals button click
-function handleEqualsButtonClick() {
-    lastNumberElement.textContent = `${lastNumberElement.textContent} ${currentNumberElement.textContent}`;
-    secondNumber = currentNumberElement.textContent;
+// function handleEqualsButtonClick() {
+//     topNumberElement.textContent = `${topNumberElement.textContent} ${bottomNumberElement.textContent}`;
+//     secondNumber = bottomNumberElement.textContent;
     
-    // Use the selected arithmetic symbol to perform the calculation
-    switch (arithmeticSymbol) {
-        case '+':
-            currentNumberElement.textContent = add(firstNumber, secondNumber);
-            break;
-        case '-':
-            currentNumberElement.textContent = subtract(firstNumber, secondNumber);
-            break;
-        case '*':
-            currentNumberElement.textContent = multiply(firstNumber, secondNumber);
-            break;
-        case '/':
-            currentNumberElement.textContent = divide(firstNumber, secondNumber);
-            break;
-    }
-}
+//     // Use the selected arithmetic symbol to perform the calculation
+//     switch (arithmeticSymbol) {
+//         case '+':
+//             bottomNumberElement.textContent = add(firstNumber, secondNumber);
+//             break;
+//         case '-':
+//             bottomNumberElement.textContent = subtract(firstNumber, secondNumber);
+//             break;
+//         case '*':
+//             bottomNumberElement.textContent = multiply(firstNumber, secondNumber);
+//             break;
+//         case '/':
+//             bottomNumberElement.textContent = divide(firstNumber, secondNumber);
+//             break;
+//     }
+// }
 
 // Handle backspace button click
 function handleBackspace() {
-    currentNumberElement.textContent = currentNumberElement.textContent.slice(0, -1);
-    if(currentNumberElement.textContent.includes('.')){
-        decimalUsed = true
-    }else{
-        decimalUsed = false
-    }
+    bottomNumberElement.textContent = bottomNumberElement.textContent.slice(0, -1);
 }
 // Clear the screen
 function clearScreen() {
-    lastNumberElement.textContent = '';
-    currentNumberElement.textContent = '0.00';
+    topNumberElement.textContent = '';
+    bottomNumberElement.textContent = '0';
     firstNumber = 0;
     secondNumber = 0;
     arithmeticSymbol = '';
-    decimalUsed = false;
 }
 
 // Arithmetic operation functions
-function add(num1, num2) {
-    return Number(num1) + Number(num2);
-}
 
-function subtract(num1, num2) {
-    return Number(num1) - Number(num2);
-}
+function handleTheMaths(arithmeticSymbol, num1, num2) {
+    // Use the selected arithmetic symbol to perform the calculation
+// Use the selected arithmetic symbol to perform the calculation
+    switch (arithmeticSymbol) {
+        case '+':
+            return Number(num1) + Number(num2);
 
-function multiply(num1, num2) {
-    return Number(num1) * Number(num2);
-}
+        case '-':
+            return Number(num1) - Number(num2);
 
-function divide(num1, num2) {
-    return Number(num1) / Number(num2);
+        case '*':
+            return Number(num1) * Number(num2);
+
+        case '/':
+            return Number(num1) / Number(num2);
+
+    }
 }
