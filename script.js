@@ -69,13 +69,13 @@ function handleNumberButtonClick(buttonValue) {
         console.log(firstNumber)
 };
 
+// This is the part im getting stuck on
 // Handle arithmetic symbol button clicks
 function handleArithmeticButtonClick(buttonValue) {
     const arithmeticSymbol = buttonValue
     
     if (secondNumber === 0){
         secondNumber = firstNumber
-        console.log('you made it')
         firstNumber = 0
         topNumberElement.textContent = secondNumber
         bottomNumberElement.textContent = firstNumber
