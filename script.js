@@ -5,7 +5,7 @@ const lastNumberElement = document.querySelector('.lastNumber');
 
 // Initialize variables to store calculator data
 let firstNumber = 0;
-let nextNumber = 0;
+let secondNumber = 0;
 let arithmeticSymbol = '';
 let decimalUsed = false;
 
@@ -42,40 +42,62 @@ function handleNumberButtonClick(buttonValue) {
         if(currentNumberElement.textContent === '0.00'){
             currentNumberElement.textContent = '';
         }
-        currentNumberElement.textContent += buttonValue;
+        if(buttonValue === '.' && decimalUsed === false){
+            decimalUsed = true;
+            currentNumberElement.textContent += buttonValue;
+        }else if(buttonValue === '.' && decimalUsed === true){
+            
+        }else{
+            currentNumberElement.textContent += buttonValue;
+        }
     }
 }
 
 // Handle arithmetic symbol button clicks
 function handleArithmeticSymbol(buttonValue) {
-    if (lastNumberElement.textContent === '0.00'){
-        lastNumberElement.textContent = `${currentNumberElement.textContent} ${buttonValue}`;
-        firstNumber = currentNumberElement.textContent;
+    if(lastNumberElement.textContent === ''){
+        arithmeticSymbol = buttonValue
+        firstNumber = currentNumberElement.textContent
+        lastNumberElement.textContent += `${currentNumberElement.textContent} ${buttonValue}`;
         currentNumberElement.textContent = '0.00';
-        arithmeticSymbol = buttonValue;
-    }else{
-        handleEqualsButtonClick()
+    } else {
+        arithmeticSymbol = buttonValue
+        secondNumber = 
+        lastNumberElement.textContent = handleEqualsButtonClick()
+        
     }
+        
+        
+        // if (lastNumberElement.textContent === '0.00'){
+        // lastNumberElement.textContent += `${currentNumberElement.textContent} ${buttonValue}`;
+        // currentNumberElement.textContent = '0.00';
+    //     firstNumber = currentNumberElement.textContent;
+    //     arithmeticSymbol = buttonValue;
+    // }else{
+    //     handleEqualsButtonClick();
+    // }
 }
+
+
 
 // Handle equals button click
 function handleEqualsButtonClick() {
     lastNumberElement.textContent = `${lastNumberElement.textContent} ${currentNumberElement.textContent}`;
-    nextNumber = currentNumberElement.textContent;
+    secondNumber = currentNumberElement.textContent;
     
     // Use the selected arithmetic symbol to perform the calculation
     switch (arithmeticSymbol) {
         case '+':
-            currentNumberElement.textContent = add(firstNumber, nextNumber);
+            currentNumberElement.textContent = add(firstNumber, secondNumber);
             break;
         case '-':
-            currentNumberElement.textContent = subtract(firstNumber, nextNumber);
+            currentNumberElement.textContent = subtract(firstNumber, secondNumber);
             break;
         case '*':
-            currentNumberElement.textContent = multiply(firstNumber, nextNumber);
+            currentNumberElement.textContent = multiply(firstNumber, secondNumber);
             break;
         case '/':
-            currentNumberElement.textContent = divide(firstNumber, nextNumber);
+            currentNumberElement.textContent = divide(firstNumber, secondNumber);
             break;
     }
 }
@@ -83,12 +105,20 @@ function handleEqualsButtonClick() {
 // Handle backspace button click
 function handleBackspace() {
     currentNumberElement.textContent = currentNumberElement.textContent.slice(0, -1);
+    if(currentNumberElement.textContent.includes('.')){
+        decimalUsed = true
+    }else{
+        decimalUsed = false
+    }
 }
-
 // Clear the screen
 function clearScreen() {
-    lastNumberElement.textContent = '0.00';
+    lastNumberElement.textContent = '';
     currentNumberElement.textContent = '0.00';
+    firstNumber = 0;
+    secondNumber = 0;
+    arithmeticSymbol = '';
+    decimalUsed = false;
 }
 
 // Arithmetic operation functions
