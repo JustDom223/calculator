@@ -8,8 +8,9 @@ const topNumberElement = document.querySelector('.lastNumber')
 let currentResult = 0;
 let firstNumber = 0;
 let secondNumber = 0;
-let arithmeticSymbol = '';
-
+let currentArithmeticSymbol = '';
+let previouseArithmeticSymbol = '';
+let equalsPressed = false
 
 // Event listener for button clicks
 btnContainerElement.addEventListener('click', function (event) {
@@ -18,23 +19,29 @@ btnContainerElement.addEventListener('click', function (event) {
         // Use a switch statement to handle different button values
         switch (buttonValue) {
             case 'clr':   
-                clearScreen();
-                break;
+            clearScreen();
+            break;
             case 'bkSpace':
                 handleBackspace();
                 break;
             case '=':
-                console.log('equals')
-    
-            // handleEqualsButtonClick();
+                currentResult = handleTheMaths(currentArithmeticSymbol, secondNumber, firstNumber);
+                topNumberElement.textContent = ''
+                bottomNumberElement.textContent = currentResult
+                equalsPressed = true
                 break;
             case '.':
                 checkDecimalUsed()
             default:
                 // Check if the buttonValue is a number or decimal
                 if(/[0-9]/.test(buttonValue)) {
+                    if (equalsPressed){
+                        clearScreen()
+                        equalsPressed = false
+                    }
                     handleNumberButtonClick(buttonValue);
                 } else if (/[/*+\-]/.test(buttonValue)){
+                    equalsPressed = false
                     handleArithmeticButtonClick(buttonValue);
                 }
         }
@@ -72,58 +79,36 @@ function handleNumberButtonClick(buttonValue) {
 // This is the part im getting stuck on
 // Handle arithmetic symbol button clicks
 function handleArithmeticButtonClick(buttonValue) {
-    const arithmeticSymbol = buttonValue
-    
-    if (secondNumber === 0){
-        secondNumber = firstNumber
-        firstNumber = 0
-        topNumberElement.textContent = secondNumber
-        bottomNumberElement.textContent = firstNumber
+    // Extract the current arithmetic symbol from the button value
+    currentArithmeticSymbol = buttonValue;
+
+    if (secondNumber === 0) {
+        // If the second number is not set, move the first number to the second, and reset the first number.
+        secondNumber = firstNumber;
+        firstNumber = 0;
+
+        // Update the displayed numbers and store the previous arithmetic symbol.
+        topNumberElement.textContent = `${secondNumber} ${currentArithmeticSymbol}`;
+        bottomNumberElement.textContent = firstNumber;
+        previousArithmeticSymbol = currentArithmeticSymbol;
     } else {
-        currentResult = handleTheMaths(arithmeticSymbol, firstNumber, secondNumber)
-        console.log(currentResult)
-        topNumberElement.textContent = `${currentResult} ${arithmeticSymbol}`
+        // Calculate the result using the previous arithmetic symbol, the second number, and the first number.
+        console.log("First Number:", firstNumber);
+        console.log("Second Number:", secondNumber);
+        
+        currentResult = handleTheMaths(previousArithmeticSymbol, secondNumber, firstNumber);
+
+        // Update the second number with the current result and display it.
+        secondNumber = currentResult;
+        console.log("Current Result:", currentResult);
+        topNumberElement.textContent = `${currentResult} ${currentArithmeticSymbol}`;
+
+        // Reset the first number and display it as 0, and store the new arithmetic symbol.
+        // firstNumber = 0;
+        bottomNumberElement.textContent = 0;
+        previousArithmeticSymbol = currentArithmeticSymbol;
     }
 }
-//     arithmeticSymbol = buttonValue
-
-//     if(topNumberElement.textContent === ''){
-//         firstNumber = bottomNumberElement.textContent
-//         topNumberElement.textContent += `${bottomNumberElement.textContent} ${buttonValue}`;
-//         bottomNumberElement.textContent = '0';
-//     }else{
-//         secondNumber = bottomNumberElement.textContent
-//         currentResult = handleTheMaths(buttonValue, firstNumber, secondNumber)
-//         console.log(answer)
-//         topNumberElement.textContent = `${answer} ${buttonValue}`
-//         firstNumber = answer
-//         bottomNumberElement.textContent = '0';
-        
-//     }
-// }
-
-
-// Handle equals button click
-// function handleEqualsButtonClick() {
-//     topNumberElement.textContent = `${topNumberElement.textContent} ${bottomNumberElement.textContent}`;
-//     secondNumber = bottomNumberElement.textContent;
-    
-//     // Use the selected arithmetic symbol to perform the calculation
-//     switch (arithmeticSymbol) {
-//         case '+':
-//             bottomNumberElement.textContent = add(firstNumber, secondNumber);
-//             break;
-//         case '-':
-//             bottomNumberElement.textContent = subtract(firstNumber, secondNumber);
-//             break;
-//         case '*':
-//             bottomNumberElement.textContent = multiply(firstNumber, secondNumber);
-//             break;
-//         case '/':
-//             bottomNumberElement.textContent = divide(firstNumber, secondNumber);
-//             break;
-//     }
-// }
 
 // Handle backspace button click
 function handleBackspace() {
@@ -135,15 +120,15 @@ function clearScreen() {
     bottomNumberElement.textContent = '0';
     firstNumber = 0;
     secondNumber = 0;
-    arithmeticSymbol = '';
+    currentArithmeticSymbol = '';
 }
 
 // Arithmetic operation functions
 
-function handleTheMaths(arithmeticSymbol, num1, num2) {
+function handleTheMaths(ArithmeticSymbol, num1, num2) {
     // Use the selected arithmetic symbol to perform the calculation
 // Use the selected arithmetic symbol to perform the calculation
-    switch (arithmeticSymbol) {
+    switch (ArithmeticSymbol) {
         case '+':
             return Number(num1) + Number(num2);
 
